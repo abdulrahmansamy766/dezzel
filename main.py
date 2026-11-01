@@ -125,12 +125,12 @@ import os
 # باقي الكود الخاص بك...
 
 if __name__ in {"__main__", "__mp_main__"}:
-    port = int(os.environ.get("PORT", 8080))
-port = int(os.environ.get("PORT", 8501))
-ui.run(
-    title="نظام إدارة مخازن الجملة", 
-    host='0.0.0.0', 
-    port=port, 
-    storage_secret='my_secret_key',
-    reload=False
-)
+    port = int(os.environ.get("PORT", 8501))
+    ui.run(
+        title="نظام إدارة مخازن الجملة",
+        host='0.0.0.0',
+        port=port,
+        storage_secret='my_secret_key',
+        reload=False,
+        gzip=False
+    )
