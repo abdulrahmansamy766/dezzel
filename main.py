@@ -122,9 +122,11 @@ def customer_invoices_page():
         return ui.navigate.to('/')
     render_customer_invoices_page()
 
-ui.run(title="نظام إدارة مخازن الجملة", storage_secret='my_secret_key', reload=False)
+if __name__ in {"__main__", "__mp_main__"}:
+    port = int(os.environ.get("PORT", 8501))
     uvicorn.run(
-        app, 
+        "main:app", 
         host="0.0.0.0", 
-        port=port
+        port=port, 
+        reload=False
     )
