@@ -12,6 +12,8 @@ from ui.pages.customers import render_customers_page
 from ui.pages.login import render_login_page
 from ui.pages.customer_invoices import render_customer_invoices_page
 import os
+import uvicorn
+
 # ربط مجلد الملفات الثابتة لكي يتمكن محرك الـ PWA وقارئ المانفست من الوصول للأيقونة والـ manifest
 app.add_static_files('/static', 'static')
 
@@ -120,11 +122,29 @@ def customer_invoices_page():
         return ui.navigate.to('/')
     render_customer_invoices_page()
 
+# باقي الكود الخاص بك...
+
+
+
+
+# هنا بتكتب صفحات وتصميمات الواجهة الخاصة بك كالمعتاد...
+
+
+# ... تصميمات وصفحات تطبيقك هنا ...
+
+
+
+
 
 # ... كل تصميمات وصفحات تطبيقك هنا ...
 
-ui.run(
-    title="نظام إدارة مخازن الجملة", 
-    storage_secret='my_secret_key',
-    gzip=False
-)
+
+# ... تصميمات وصفحات تطبيقك هنا ...
+
+if __name__ in {"__main__", "__mp_main__"}:
+    port = int(os.environ.get("PORT", 8501))
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=port
+    )
