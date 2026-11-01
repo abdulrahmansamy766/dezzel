@@ -141,8 +141,7 @@ def customer_invoices_page():
 
 # ... تصميمات وصفحات تطبيقك هنا ...
 
-if __name__ in {"__main__", "__mp_main__"}:
-    port = int(os.environ.get("PORT", 8501))
+ui.run(title="نظام إدارة مخازن الجملة", storage_secret='my_secret_key', reload=False)
     uvicorn.run(
         app, 
         host="0.0.0.0", 
