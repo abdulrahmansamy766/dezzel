@@ -14,6 +14,16 @@ from ui.pages.customer_invoices import render_customer_invoices_page
 import os
 import uvicorn
 
+from fastapi import FastAPI
+from nicegui import ui, app
+
+# تعريف صفحة رئيسية بسيطة للتأكد من التحميل
+@ui.page('/')
+def main_page():
+    ui.label('نظام إدارة مخازن الجملة - يعمل بنجاح').classes('text-2xl font-bold')
+
+# ربط NiceGUI بتطبيق FastAPI
+# (تأكد من عدم استدعاء ui.run التقليدية في النهاية)
 # ربط مجلد الملفات الثابتة لكي يتمكن محرك الـ PWA وقارئ المانفست من الوصول للأيقونة والـ manifest
 app.add_static_files('/static', 'static')
 
