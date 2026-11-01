@@ -1,5 +1,8 @@
-from database.db import get_connection
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from database.db import get_connection
 # --- دوال المنتجات والمخزن ---
 def add_product(barcode, name, unit, buy_price, sell_price, quantity, min_limit, custom_prices=None):
     try:
