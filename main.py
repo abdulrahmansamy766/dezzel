@@ -135,16 +135,12 @@ def customer_invoices_page():
 from fastapi import FastAPI
 from nicegui import ui, app
 
-# هنا صفحات وتصميمات تطبيق الـ WMS/POS الخاص بك...
+# تعريف صفحة أو صفحات التطبيق الخاصة بك
 @ui.page('/')
 def index():
     ui.label('نظام إدارة مخازن الجملة').classes('text-2xl font-bold')
 
-# ربط NiceGUI مع تطبيق FastAPI الافتراضي
-ui.run_with(
-    app,
-    title="نظام إدارة مخازن الجملة",
-    storage_secret='my_secret_key'
-)
+# بدلاً من ui.run_with، NiceGUI بيرتبط بتلقائياً بـ app الـ FastAPI 
+# طالما التطبيق بيتم استدعاؤه كـ ASGI application من ملف الـ WSGI الخاص بـ PythonAnywhere.
 
 # ملاحظة: على PythonAnywhere مش بنحتاج uvicorn.run خالص، لأن المنصة هي اللي بتشغل الـ application من خلال ملف الـ WSGI/ASGI مباشرة.
