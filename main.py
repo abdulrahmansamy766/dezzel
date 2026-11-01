@@ -1,5 +1,9 @@
-from nicegui import ui, app
+import os
+from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from nicegui import ui, app
+
+# استيراد قواعد البيانات والصفحات
 from database.models import init_db
 from ui.navbar import render_navbar
 from ui.pages.pos import render_pos_page
@@ -11,23 +15,14 @@ from ui.pages.treasury import render_treasury_page
 from ui.pages.customers import render_customers_page
 from ui.pages.login import render_login_page
 from ui.pages.customer_invoices import render_customer_invoices_page
-import os
-import uvicorn
 
-from fastapi import FastAPI
-from nicegui import ui, app
+# تهيئة قاعدة البيانات عند بدء التشغيل
+init_db()
 
-# تعريف صفحة رئيسية بسيطة للتأكد من التحميل
-@ui.page('/')
-def main_page():
-    ui.label('نظام إدارة مخازن الجملة - يعمل بنجاح').classes('text-2xl font-bold')
-
-# ربط NiceGUI بتطبيق FastAPI
-# (تأكد من عدم استدعاء ui.run التقليدية في النهاية)
-# ربط مجلد الملفات الثابتة لكي يتمكن محرك الـ PWA وقارئ المانفست من الوصول للأيقونة والـ manifest
+# ربط مجلد الملفات الثابتة للـ PWA والأيقونات
 app.add_static_files('/static', 'static')
 
-# جعل ملفات PWA متاحة من جذر النطاق حتى يعمل نطاق الـ Service Worker على كل الصفحات.
+# جعل ملفات PWA متاحة من جذر النطاق
 @app.get('/sw.js', include_in_schema=False)
 def service_worker():
     return FileResponse(
@@ -53,9 +48,7 @@ ui.add_head_html('''
     </script>
 ''', shared=True)
 
-# دالة تغليف عامة تعمل كـ Decorator لإدراج النافبار تلقائياً في قمة أي صفحة
-# دالة تغليف عامة تعمل كـ Decorator وتقبل الـ arguments والـ kwargs لتجنب خطأ FastAPI
-# دالة تغليف عامة تعمل كـ Decorator لإدراج النافبار تلقائياً
+# دالة تغليف عامة لإدراج النافبار تلقائياً في قمة أي صفحة
 def global_layout(page_func):
     def wrapper():
         render_navbar()
@@ -67,7 +60,7 @@ def global_layout(page_func):
 def login_page():
     render_login_page()
 
-# الصفحة الرئيسية (نقطة البيع) - محمية ومزودة بالنافبار
+# الصفحة الرئيسية (نقطة البيع POS) - محمية ومزودة بالنافبار
 @ui.page('/')
 @global_layout
 def index_page():
@@ -131,16 +124,3 @@ def customer_invoices_page():
         ui.notify('غير مسموح لك بالدخول لهذه الصفحة!', color='negative')
         return ui.navigate.to('/')
     render_customer_invoices_page()
-
-from fastapi import FastAPI
-from nicegui import ui, app
-
-# تعريف صفحة أو صفحات التطبيق الخاصة بك
-@ui.page('/')
-def index():
-    ui.label('نظام إدارة مخازن الجملة').classes('text-2xl font-bold')
-
-# بدلاً من ui.run_with، NiceGUI بيرتبط بتلقائياً بـ app الـ FastAPI 
-# طالما التطبيق بيتم استدعاؤه كـ ASGI application من ملف الـ WSGI الخاص بـ PythonAnywhere.
-
-# ملاحظة: على PythonAnywhere مش بنحتاج uvicorn.run خالص، لأن المنصة هي اللي بتشغل الـ application من خلال ملف الـ WSGI/ASGI مباشرة.
