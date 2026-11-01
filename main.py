@@ -122,25 +122,6 @@ def customer_invoices_page():
         return ui.navigate.to('/')
     render_customer_invoices_page()
 
-# باقي الكود الخاص بك...
-
-
-
-
-# هنا بتكتب صفحات وتصميمات الواجهة الخاصة بك كالمعتاد...
-
-
-# ... تصميمات وصفحات تطبيقك هنا ...
-
-
-
-
-
-# ... كل تصميمات وصفحات تطبيقك هنا ...
-
-
-# ... تصميمات وصفحات تطبيقك هنا ...
-
 ui.run(title="نظام إدارة مخازن الجملة", storage_secret='my_secret_key', reload=False)
     uvicorn.run(
         app, 
