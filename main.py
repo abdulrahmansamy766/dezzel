@@ -129,9 +129,12 @@ import os
 
 # هنا بتكتب صفحات وتصميمات الواجهة الخاصة بك كالمعتاد...
 
+
+# ... تصميمات وصفحات تطبيقك هنا ...
+
 if __name__ in {"__main__", "__mp_main__"}:
     port = int(os.environ.get("PORT", 8501))
-    uvicorn.main.run(
+    uvicorn.run(
         "main:app", 
         host="0.0.0.0", 
         port=port, 
