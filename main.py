@@ -12,6 +12,8 @@ from ui.pages.customers import render_customers_page
 from ui.pages.login import render_login_page
 from ui.pages.customer_invoices import render_customer_invoices_page
 import os
+import uvicorn
+
 
 # ربط مجلد الملفات الثابتة لكي يتمكن محرك الـ PWA وقارئ المانفست من الوصول للأيقونة والـ manifest
 app.add_static_files('/static', 'static')
@@ -124,13 +126,14 @@ import os
 
 # باقي الكود الخاص بك...
 
+
+# هنا بتكتب صفحات وتصميمات الواجهة الخاصة بك كالمعتاد...
+
 if __name__ in {"__main__", "__mp_main__"}:
     port = int(os.environ.get("PORT", 8501))
-    ui.run(
-        title="نظام إدارة مخازن الجملة",
-        host='0.0.0.0',
-        port=port,
-        storage_secret='my_secret_key',
-        reload=False,
-        gzip=False
+    uvicorn.main.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=port, 
+        reload=False
     )
