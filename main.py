@@ -132,4 +132,19 @@ def customer_invoices_page():
         return ui.navigate.to('/')
     render_customer_invoices_page()
 
-ui.run(title="نظام إدارة مخازن الجملة", storage_secret='my_secret_key', reload=False)
+from fastapi import FastAPI
+from nicegui import ui, app
+
+# هنا صفحات وتصميمات تطبيق الـ WMS/POS الخاص بك...
+@ui.page('/')
+def index():
+    ui.label('نظام إدارة مخازن الجملة').classes('text-2xl font-bold')
+
+# ربط NiceGUI مع تطبيق FastAPI الافتراضي
+ui.run_with(
+    app,
+    title="نظام إدارة مخازن الجملة",
+    storage_secret='my_secret_key'
+)
+
+# ملاحظة: على PythonAnywhere مش بنحتاج uvicorn.run خالص، لأن المنصة هي اللي بتشغل الـ application من خلال ملف الـ WSGI/ASGI مباشرة.
